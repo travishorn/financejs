@@ -1,8 +1,8 @@
 # financejs
 
-A modern JavaScript rewrite of
-[tvm-financejs](https://github.com/kgkars/tvm-financejs/) with Excel-style time
-value of money and cash-flow formulas.
+Excel-style time value of money and cash-flow formulas. This is a modern rewrite
+of [tvm-financejs](https://github.com/kgkars/tvm-financejs/) by
+[kgkars](https://github.com/kgkars).
 
 ## Why this rewrite
 
@@ -176,6 +176,7 @@ to 8 decimal places), while using a modern JavaScript module API.
 
 The MIT License
 
+Copyright 2020 kgkars  
 Copyright 2026 Travis Horn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
