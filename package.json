@@ -1,7 +1,7 @@
 {
-  "name": "finance",
+  "name": "@travishorn/financejs",
   "version": "0.1.0",
-  "description": "",
+  "description": "Modern JavaScript time value of money and cash-flow financial formulas with Excel-style behavior.",
   "exports": "./src/index.js",
   "scripts": {
     "test": "vitest --run",
@@ -9,7 +9,18 @@
     "lint:types": "tsc --noEmit",
     "format": "prettier --write ."
   },
-  "keywords": [],
+  "keywords": [
+    "finance",
+    "financial",
+    "tvm",
+    "time-value-of-money",
+    "excel",
+    "npv",
+    "irr",
+    "rate",
+    "loan",
+    "amortization"
+  ],
   "author": "Travis Horn <travis@travishorn.com> (https://travishorn.com/)",
   "license": "MIT",
   "type": "module",
