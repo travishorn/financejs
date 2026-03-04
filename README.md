@@ -30,13 +30,13 @@ npm install @travishorn/financejs
 import { pmt, rate, irr } from "@travishorn/financejs";
 
 const payment = pmt(0.0525, 5, -10000);
-// 2325.7331680465
+// 2325.733168046526
 
 const periodicRate = rate(60, 500, -25000);
-// 0.00618341316125388
+// 0.006183413161254404
 
 const internalRate = irr([-1500, 500, 500, 500, 500]);
-// 0.125898324962364
+// 0.12589832495374934
 ```
 
 ## Excel-style conventions
@@ -53,76 +53,70 @@ const internalRate = irr([-1500, 500, 500, 500, 500]);
 
 ### Input Variables
 
-| Variable | Description                                                                           |
-| -------- | ------------------------------------------------------------------------------------- |
-| `pv`     | Present value                                                                         |
-| `fv`     | Future value                                                                          |
-| `pmt`    | Payment                                                                               |
-| `nper`   | Total number of periods                                                               |
-| `per`    | A specific period                                                                     |
-| `rate`   | Rate for the period(s)                                                                |
-| `type`   | When payments are due. `0` = end of period/arrears. `1` = beginning of period/advance |
-| `guess`  | A guess at the rate                                                                   |
-| `values` | A set of periodic cash flows                                                          |
-
-### `pv(rate, nper, pmt, fv = 0, type = 0)`
-
-Returns the present value of an investment, or the total amount that a series of
-future payments is worth now.
+| Variable | Description                                                                                                                                                                                                                                                                                                                                                                                                           |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pv`     | The present value, or the lump-sum amount that a series of future payments is worth right now.                                                                                                                                                                                                                                                                                                                        |
+| `fv`     | The future value or a cash balance you want to attain after the last payment is made. If `fv` is omitted, it is assumed to be `0` (the future value of a loan, for example, is 0). For example, if you want to save $50,000 to pay for a special project in 18 years, then $50,000 is the future value. You could then make a conservative guess at an interest rate and determine how much you must save each month. |
+| `pmt`    | The payment made each period and cannot change over the life of the annuity. Typically, `pmt` includes principal and interest but no other fees or taxes. For example, the monthly payments on a $10,000, four-year car loan at 12 percent are $263.33. You would enter `-263.33` as the `pmt`.                                                                                                                       |
+| `nper`   | The total number of payment periods in an annuity. For example, if you get a four-year car loan and make monthly payments, your loan has 4 \* 12 (or 48) periods. You would enter `48` for `per`.                                                                                                                                                                                                                     |
+| `per`    | The period for which you want to find the interest and must be in the range `1` to `nper`.                                                                                                                                                                                                                                                                                                                            |
+| `rate`   | The interest rate per period. For example, if you obtain an automobile loan at a 10 percent annual interest rate and make monthly payments, your interest rate per month is 10% / 12, or 0.83%. You would enter `0.10 / 12` or `0.0083`, into the formula as the rate.                                                                                                                                                |
+| `type`   | The number `0` or `1` and indicates when payments are due. Set `type` equal to `0` or omitted if payments are due at the end of the period. Set `type` equal to `1` if payments are due at the beginning of the period.                                                                                                                                                                                               |
+| `guess`  | A number that you guess is close to the result. In most cases you do not need to provide `guess` for the calculation to succeeed. If a RangeError is thrown, or if the result is not close to what you expected, try again with a different value for `guess`.                                                                                                                                                        |
+| `values` | Array of cash flows, where each entry represents a payment (negative) or income (positive) at a regular interval.                                                                                                                                                                                                                                                                                                     |
 
 ### `fv(rate, nper, pmt, pv, type = 0)`
 
-Returns the future value of an investment based on periodic, equal, payments and
-a constant interest rate.
-
-### `pmt(rate, nper, pv, fv = 0, type = 0)`
-
-Calculates the payment for a loan based on a constant stream of equal payments
-and a constant interest rate.
-
-### `nper(rate, pmt, pv, fv = 0, type = 0)`
-
-Number of periods.
+Calculates the future value of an investment based on a constant interest rate.
+You can use FV with either periodic, constant payments, or a single lump sum
+payment.
 
 ### `ipmt(rate, per, nper, pv, fv = 0, type = 0)`
 
-Returns the calculated interest portion of a payment for a specific period based
-on a constant stream of equal payments and a constant interest rate.
-
-### `ppmt(rate, per, nper, pv, fv = 0, type = 0)`
-
-Returns the calculated principal portion of a payment for a specific period
-based on a constant stream of equal payments and a constant interest rate.
-
-### `rate(nper, pmt, pv, fv = 0, type = 0, guess = 0.1)`
-
-Returns the interest rate per period for a loan or investment (iterative solve).
-
-### `npv(rate, ...values)`
-
-Returns the net present value of an investment based on a constant rate of
-return and a series of future payments/investments (as negative values) and
-income/return (as positive values).
+Returns the interest payment for a given period for an investment based on
+periodic, constant payments and a constant interest rate.
 
 ### `irr(values, guess = 0.1)`
 
-Returns the internal rate of return for a series of cash flows.
+Calculates the internal rate of return for a series of cash flows represented by
+the numbers in `values`. These cash flows do not have to be even, as they would
+be for an annuity. However, the cash flows must occur at regular intervals, such
+as monthly or annually. The internal rate of return is the interest rate
+received for an investment consisting of payments (negative values) and income
+(positive values) that occur at regular periods.
 
-A couple of items to note about this formula:
+### `nper(rate, pmt, pv, fv = 0, type = 0)`
 
-- The variable values must be input as an array.
-- There must be at least one negative and one positive value as part of the cash flow.
-- Cash flows are assumed to be due in the same order they are arranged in the Array.
+Calculates the number of periods for an investment based on periodic, constant
+payments and a constant interest rate.
 
-Example usage:
+### `npv(rate, ...values)`
 
-```javascript
-returnIRR() {
-  const values = [-1500, 500, 500, 500, 500];
-  return Math.round(irr(values) * 100 ) / 100 * 100;
-}
-// returns 12.59
-```
+Calculates the net present value of an investment by using a discount rate and a
+series of future payments (negative values) and income (positive values).
+
+### `pmt(rate, nper, pv, fv = 0, type = 0)`
+
+Calculates the payment for a loan based on constant payments and a constant
+interest rate.
+
+### `ppmt(rate, per, nper, pv, fv = 0, type = 0)`
+
+Calculates the payment on the principal for a given period for an investment
+based on periodic, constant payments and a constant interest rate.
+
+### `pv(rate, nper, pmt, fv = 0, type = 0)`
+
+Calculates the present value of a loan or an investment, based on a constant
+interest rate. You can use PV with either periodic, constant payments (such as a
+mortgage or other loan), or a future value that's your investment goal.
+
+### `rate(nper, pmt, pv, fv = 0, type = 0, guess = 0.1)`
+
+Calculates the interest rate per period of an annuity. The rate is calculated by
+iteration and can have zero or more solutions. If the successive results of this
+function do not converge to within 0.0000001 after 128 iterations, a RangeError
+is thrown.
 
 ## Error behavior
 

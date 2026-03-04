@@ -185,3 +185,10 @@ test.each(rateErrorCases)(
     expect(() => rate(nper, pmt, pv, fv, type, guess)).toThrow(RangeError);
   },
 );
+
+test("rate() returns +0 for zero-valued solution", () => {
+  const result = rate(10, -100, 1000, 0, 0, -0);
+
+  expect(result).toBe(0);
+  expect(Object.is(result, -0)).toBe(false);
+});

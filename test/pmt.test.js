@@ -16,3 +16,10 @@ test.each(
     expect(pmt(rate, nper, pv, fv, type)).toBeCloseTo(expected, 8);
   },
 );
+
+test("pmt() returns +0 for zero-valued result", () => {
+  const result = pmt(0.05, 10, 0, 0);
+
+  expect(result).toBe(0);
+  expect(Object.is(result, -0)).toBe(false);
+});

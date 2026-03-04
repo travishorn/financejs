@@ -16,3 +16,29 @@ test.each(
     expect(fv(rate, nper, pmt, pv, type)).toBeCloseTo(expected, 8);
   },
 );
+
+test("fv() supports omitted pmt when pv is provided", () => {
+  const rate = 0.05;
+  const nper = 10;
+  const pv = -1000;
+  const expected = -pv * Math.pow(1 + rate, nper);
+
+  expect(fv(rate, nper, undefined, pv)).toBeCloseTo(expected, 8);
+});
+
+test("fv() supports omitted pv when pmt is provided", () => {
+  const rate = 0.05;
+  const nper = 10;
+  const pmt = -100;
+  const expected = -((pmt / rate) * (Math.pow(1 + rate, nper) - 1));
+
+  expect(fv(rate, nper, pmt)).toBeCloseTo(expected, 8);
+});
+
+test("fv() returns 0 when both pmt and pv are omitted or zero", () => {
+  const rate = 0.05;
+  const nper = 10;
+
+  expect(fv(rate, nper, undefined, undefined)).toBe(0);
+  expect(fv(rate, nper, 0, 0)).toBe(0);
+});

@@ -30,3 +30,10 @@ test.each(
 )("nper() throws RangeError for invalid inputs", (rate, pmt, pv, fv, type) => {
   expect(() => nper(rate, pmt, pv, fv, type)).toThrow(RangeError);
 });
+
+test("nper() returns +0 for zero-valued result", () => {
+  const result = nper(0, 100, 500, -500);
+
+  expect(result).toBe(0);
+  expect(Object.is(result, -0)).toBe(false);
+});

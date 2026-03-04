@@ -32,3 +32,10 @@ test.each(
     expect(() => ppmt(rate, per, nper, pv, fv, type)).toThrow(RangeError);
   },
 );
+
+test("ppmt() returns +0 for zero-valued result", () => {
+  const result = ppmt(0.05, 1, 10, 0, 0, 1);
+
+  expect(result).toBe(0);
+  expect(Object.is(result, -0)).toBe(false);
+});

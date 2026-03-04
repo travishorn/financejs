@@ -16,3 +16,10 @@ test.each(
     expect(pv(rate, nper, pmt, fv, type)).toBeCloseTo(expected, 8);
   },
 );
+
+test("pv() returns +0 for zero-valued result", () => {
+  const result = pv(0.05, 10, 0, 0);
+
+  expect(result).toBe(0);
+  expect(Object.is(result, -0)).toBe(false);
+});
