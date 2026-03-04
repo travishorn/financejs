@@ -20,10 +20,11 @@
     "access": "public"
   },
   "scripts": {
-    "test": "vitest --run",
-    "lint": "eslint .",
+    "format": "prettier --write .",
+    "lint:format": "prettier --check .",
     "lint:types": "tsc --noEmit",
-    "format": "prettier --write ."
+    "lint": "eslint .",
+    "test": "vitest --run"
   },
   "keywords": [
     "finance",

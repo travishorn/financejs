@@ -130,15 +130,13 @@ test.each([
 );
 
 test.each(
-  /** @type {[number, number[], Date[]][]} */ (
-    [
-      [-1, [100, 200], [new Date("2020-01-01"), new Date("2020-01-02")]],
-      [0.1, [], []],
-      [0.1, [100], [new Date(NaN)]],
-      [0.1, [100, 200], [new Date("2020-01-01"), new Date(NaN)]],
-      [0.1, [100, 200], [new Date("2020-01-02"), new Date("2020-01-01")]],
-    ]
-  ),
+  /** @type {[number, number[], Date[]][]} */ ([
+    [-1, [100, 200], [new Date("2020-01-01"), new Date("2020-01-02")]],
+    [0.1, [], []],
+    [0.1, [100], [new Date(NaN)]],
+    [0.1, [100, 200], [new Date("2020-01-01"), new Date(NaN)]],
+    [0.1, [100, 200], [new Date("2020-01-02"), new Date("2020-01-01")]],
+  ]),
 )("xnpv() throws RangeError for invalid inputs", (rate, values, dates) => {
   expect(() => xnpv(rate, values, dates)).toThrow(RangeError);
 });
