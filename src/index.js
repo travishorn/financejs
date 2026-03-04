@@ -1,9 +1,11 @@
-export { pv } from "./pv.js";
-export { nper } from "./nper.js";
-export { pmt } from "./pmt.js";
 export { fv } from "./fv.js";
 export { ipmt } from "./ipmt.js";
-export { ppmt } from "./ppmt.js";
-export { npv } from "./npv.js";
 export { irr } from "./irr.js";
+export { nper } from "./nper.js";
+export { npv } from "./npv.js";
+export { pmt } from "./pmt.js";
+export { ppmt } from "./ppmt.js";
+export { pv } from "./pv.js";
 export { rate } from "./rate.js";
+export { xirr } from "./xirr.js";
+export { xnpv } from "./xnpv.js";

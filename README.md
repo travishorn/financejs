@@ -118,6 +118,17 @@ iteration and can have zero or more solutions. If the successive results of this
 function do not converge to within 0.0000001 after 128 iterations, a RangeError
 is thrown.
 
+### `xirr(values, dates, guess = 0.1)`
+
+Calculates the internal rate of return for a schedule of cash flows that is
+not necessarily periodic. To calculate the internal rate of return for a
+series of periodic cash flows, use the `irr()` function.
+
+### `xnpv(rate, values, dates)`
+
+Calculates the net present value for a schedule of cash flows that is not
+necessarily periodic.
+
 ## Error behavior
 
 All functions will either return a number, or throw `RangeError` for invalid
@@ -165,6 +176,20 @@ npm run format
 
 This rewrite is intended to match Excel-style formulas closely (tests validate
 to 8 decimal places), while using a modern JavaScript module API.
+
+## Roadmap
+
+I want to add more [Excel financial
+functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8)
+to the project. Since there are over 50 functions, I'll break them into "tiers."
+
+- **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
+- **Tier 2:** ✓ipmt, ✓ppmt, cumipmt, cumprinc, sln, db, ddb, effect, nominal, syd,
+  mirr
+- **Tier 3:** rri, pduration, vdb, fvschedule, dollarde, dollarfr, ispmt
+- **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
+  pricedisc, pricemat, yielddisc, yieldmat
+- **Tier 5:** all others
 
 ## License
 
