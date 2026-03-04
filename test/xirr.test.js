@@ -146,6 +146,6 @@ test.each(xirrSuccessCases)(
 test.each(xirrErrorCases)(
   "xirr() throws an error for invalid inputs",
   (values, dates, guess) => {
-    expect(() => xirr(values, dates, guess)).toThrow();
+    expect(() => xirr(values, dates, guess)).toThrow(RangeError);
   },
 );
