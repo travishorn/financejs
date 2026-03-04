@@ -1,6 +1,14 @@
 import { expect, test } from "vitest";
 import { xirr } from "../src/xirr.js";
 
+import { afterEach, vi } from "vitest";
+
+afterEach(() => {
+  vi.doUnmock("../src/xnpv.js");
+  vi.resetModules();
+  vi.restoreAllMocks();
+});
+
 /** @type {[number[], Date[], number | undefined, number][]} */
 const xirrSuccessCases = [
   [
@@ -149,3 +157,55 @@ test.each(xirrErrorCases)(
     expect(() => xirr(values, dates, guess)).toThrow(RangeError);
   },
 );
+
+test("xirr() throws when a non-first date is invalid", () => {
+  const values = [-100, 200];
+  const dates = [new Date("2020-01-01"), new Date(NaN)];
+  expect(() => xirr(values, dates, 0.1)).toThrow(
+    "All dates must be valid Date objects.",
+  );
+});
+
+test("xirr() throws 'Invalid values for XIRR.' when npv1 === npv0 after adjustment", () => {
+  const values = [-100, 100];
+  const date = new Date("2020-01-01");
+  const dates = [date, date];
+  expect(() => xirr(values, dates, 0.1)).toThrow("Invalid values for XIRR.");
+});
+
+test("xirr() throws 'Maximum iterations exceeded while calculating XIRR.' for non-converging input", () => {
+  const values = [-10000, 1];
+  const dates = [new Date("2000-01-01"), new Date("2100-01-01")];
+  expect(() => xirr(values, dates, 0.1)).toThrow(
+    "Maximum iterations exceeded while calculating XIRR.",
+  );
+});
+
+test("xirr() handles equal NPV once, then continues secant iteration", async () => {
+  const xnpvMock = vi
+    .fn()
+    .mockReturnValueOnce(1)
+    .mockReturnValueOnce(1)
+    .mockReturnValueOnce(2)
+    .mockReturnValueOnce(0);
+
+  vi.doMock("../src/xnpv.js", () => ({ xnpv: xnpvMock }));
+  const { xirr } = await import("../src/xirr.js");
+
+  const values = [-100, 200];
+  const dates = [new Date("2020-01-01"), new Date("2020-02-01")];
+  const result = xirr(values, dates, 0.1);
+
+  expect(result).toBeCloseTo(0.100030002, 12);
+});
+
+test("xirr() returns a negative rate for a losing investment", async () => {
+  const { xirr } = await import("../src/xirr.js");
+
+  const values = [-1000, 900];
+  const dates = [new Date("2020-01-01"), new Date("2021-01-01")];
+  const result = xirr(values, dates, 0.1);
+
+  expect(result).toBeLessThan(0);
+  expect(result).toBeCloseTo(-0.1, 2);
+});
