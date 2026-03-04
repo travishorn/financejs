@@ -40,9 +40,9 @@ export function xnpv(rate, values, dates) {
   }
 
   const baseDay = Date.UTC(
-    firstDate.getFullYear(),
-    firstDate.getMonth(),
-    firstDate.getDate(),
+    firstDate.getUTCFullYear(),
+    firstDate.getUTCMonth(),
+    firstDate.getUTCDate(),
   );
 
   let total = 0;
@@ -55,9 +55,9 @@ export function xnpv(rate, values, dates) {
     }
 
     const currentDay = Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
     );
 
     if (currentDay < baseDay) {

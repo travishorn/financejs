@@ -73,16 +73,23 @@ export function xirr(values, dates, guess = 0.1) {
 
   // Validate dates
   const firstDate = dates[0];
+  if (!(firstDate instanceof Date) || isNaN(firstDate.getTime())) {
+    throw new RangeError("All dates must be valid Date objects.");
+  }
   const time0 = Date.UTC(
-    firstDate.getFullYear(),
-    firstDate.getMonth(),
-    firstDate.getDate(),
+    firstDate.getUTCFullYear(),
+    firstDate.getUTCMonth(),
+    firstDate.getUTCDate(),
   );
   for (const d of dates) {
     if (!(d instanceof Date) || isNaN(d.getTime())) {
       throw new RangeError("All dates must be valid Date objects.");
     }
-    const currentDay = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+    const currentDay = Date.UTC(
+      d.getUTCFullYear(),
+      d.getUTCMonth(),
+      d.getUTCDate(),
+    );
     if (currentDay < time0) {
       throw new RangeError("Dates must not precede the first date.");
     }
@@ -92,6 +99,8 @@ export function xirr(values, dates, guess = 0.1) {
   const epsilonMax = 1e-11;
   const step = 1e-5;
   const iterationMax = 200;
+  // xnpv requires rate > -1; this is the closest valid value to -1
+  const minRate = -0.9999999999;
 
   let rate0 = guess;
   let npv0 = xnpv(rate0, values, dates);
@@ -106,7 +115,11 @@ export function xirr(values, dates, guess = 0.1) {
         throw new RangeError("Invalid values for XIRR.");
       }
     }
-    const nextRate = rate1 - ((rate1 - rate0) * npv1) / (npv1 - npv0);
+    let nextRate = rate1 - ((rate1 - rate0) * npv1) / (npv1 - npv0);
+    // Ensure the candidate rate stays within the valid domain for xnpv (rate > -1)
+    if (nextRate <= -1) {
+      nextRate = minRate;
+    }
     const nextNpv = xnpv(nextRate, values, dates);
     if (Math.abs(nextNpv) < epsilonMax) {
       const spreadsheetAlignment = 2e-9;
