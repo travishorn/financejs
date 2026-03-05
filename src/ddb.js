@@ -23,6 +23,7 @@
  * `factor` is omitted, it is assumed to be `2` (the double-declining balance
  * method).
  * @returns {number} the depreciation
+ * @throws {RangeError} When `period` is outside the valid range.
  *
  * @example
  * ddb(2400, 300, 10 * 365, 1); // 1.31506849
@@ -43,6 +44,6 @@ export function ddb(cost, salvage, life, period, factor = 2) {
     value -= dep;
   }
 
-  // If period is out of range, return 0 (Excel returns 0 for out-of-range periods)
-  return 0;
+  // Period is out of range
+  throw new RangeError("Invalid period");
 }

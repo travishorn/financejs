@@ -20,3 +20,7 @@ test.each(
     expect(ddb(cost, salvage, life, period, factor)).toBeCloseTo(expected, 8);
   },
 );
+
+test("ddb() throws an error for an out-of-range period", () => {
+  expect(() => ddb(10000, 1000, 5, 0, 2)).toThrow(RangeError);
+});
