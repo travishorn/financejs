@@ -1,6 +1,7 @@
 export { cumipmt } from "./cumipmt.js";
 export { cumprinc } from "./cumprinc.js";
 export { db } from "./db.js";
+export { ddb } from "./ddb.js";
 export { fv } from "./fv.js";
 export { ipmt } from "./ipmt.js";
 export { irr } from "./irr.js";

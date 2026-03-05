@@ -18,7 +18,7 @@
  * @param {number} life - The number of periods over which the asset is
  * depreciated (sometimes called the useful life of the asset).
  * @param {number} period - The period for which you want to calculate the
- * depreciation. Period must use the same units as life.
+ * depreciation. Period must use the same units as `life`.
  * @param {number} [month=12] - The number of months in the first year. If month
  * is omitted, it is assumed to be `12`.
  * @returns {number} the depreciation
