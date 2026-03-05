@@ -6,6 +6,7 @@ export { effect } from "./effect.js";
 export { fv } from "./fv.js";
 export { ipmt } from "./ipmt.js";
 export { irr } from "./irr.js";
+export { mirr } from "./mirr.js";
 export { nominal } from "./nominal.js";
 export { nper } from "./nper.js";
 export { npv } from "./npv.js";
