@@ -63,7 +63,9 @@ const internalRate = irr([-1500, 500, 500, 500, 500]);
 | `guess`       | A number that you guess is close to the result. In most cases you do not need to provide `guess` for the calculation to succeeed. If a RangeError is thrown, or if the result is not close to what you expected, try again with a different value for `guess`.                                                                                                                                                        |
 | `life`        | The number of periods over which the asset is depreciated (sometimes called the useful life of the asset).                                                                                                                                                                                                                                                                                                            |
 | `month`       | The number of months in the first year.                                                                                                                                                                                                                                                                                                                                                                               |
+| `nominalRate` | The nominal interest rate.                                                                                                                                                                                                                                                                                                                                                                                            |
 | `nper`        | The total number of payment periods in an annuity. For example, if you get a four-year car loan and make monthly payments, your loan has 4 \* 12 (or 48) periods. You would enter `48` for `per`.                                                                                                                                                                                                                     |
+| `npery`       | The number of compounding periods per year.                                                                                                                                                                                                                                                                                                                                                                           |
 | `per`         | The period for which you want to find the interest and must be in the range `1` to `nper`.                                                                                                                                                                                                                                                                                                                            |
 | `period`      | The period for which you want to calculate the depreciation. Period must use the same units as `life`.                                                                                                                                                                                                                                                                                                                |
 | `pmt`         | The payment made each period and cannot change over the life of the annuity. Typically, `pmt` includes principal and interest but no other fees or taxes. For example, the monthly payments on a $10,000, four-year car loan at 12 percent are $263.33. You would enter `-263.33` as the `pmt`.                                                                                                                       |
@@ -93,6 +95,11 @@ fixed-declining balance method.
 
 Calculates the depreciation of an asset for a specified period using the
 double-declining balance method or some other method you specify.
+
+### `effect(nominalRate, npery)`
+
+Calculates the effective annual interest rate, given the nominal annual interest
+rate and the number of compounding periods per year.
 
 ### `fv(rate, nper, pmt, pv, type = 0)`
 
@@ -217,8 +224,8 @@ functions](https://support.microsoft.com/en-us/office/financial-functions-refere
 to the project. Since there are over 50 functions, I'll break them into "tiers."
 
 - **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
-- **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, effect, nominal, syd,
-  mirr
+- **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, ✓effect,
+  nominal, syd, mirr
 - **Tier 3:** rri, pduration, vdb, fvschedule, dollarde, dollarfr, ispmt
 - **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
   pricedisc, pricemat, yielddisc, yieldmat
