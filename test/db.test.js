@@ -21,10 +21,10 @@ test.each(
   },
 );
 
-test("db() caps depreciation to avoid dropping below salvage (normal branch)", () => {
-  expect(db(100, 80, 2, 2, 12)).toBeCloseTo(9.400000000000006, 8);
+test("db() matches Excel for small normal-period depreciation (edge case)", () => {
+  expect(db(100, 80, 2, 2, 12)).toBeCloseTo(9.4764, 8);
 });
 
-test("db() caps depreciation to avoid dropping below salvage (last-period branch)", () => {
-  expect(db(100, 92, 2, 3, 1)).toBeCloseTo(3.5723416666666594, 8);
+test("db() matches Excel for small last-period depreciation (edge case)", () => {
+  expect(db(100, 92, 2, 3, 1)).toBeCloseTo(3.59192717, 8);
 });

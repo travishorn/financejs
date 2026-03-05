@@ -53,15 +53,8 @@ export function db(cost, salvage, life, period, month = 12) {
   if (isLastPeriod) {
     // Last period: prorate by (12 - month)
     dep = (value * rate * (12 - month)) / 12;
-    // Cap so book value never goes below salvage
-    if (value - dep < salvage) {
-      dep = value - salvage;
-    }
   } else {
     dep = value * rate;
-    if (value - dep < salvage) {
-      dep = value - salvage;
-    }
   }
   return dep;
 }
