@@ -14,5 +14,6 @@ export { ppmt } from "./ppmt.js";
 export { pv } from "./pv.js";
 export { rate } from "./rate.js";
 export { sln } from "./sln.js";
+export { syd } from "./syd.js";
 export { xirr } from "./xirr.js";
 export { xnpv } from "./xnpv.js";

@@ -164,6 +164,11 @@ is thrown.
 
 Calculates the straight-line depreciation of an asset for one period.
 
+### `syd(cost, salvage, life, per)`
+
+Calculates the sum-of-years' digits depreciation of an asset for a specified
+period.
+
 ### `xirr(values, dates, guess = 0.1)`
 
 Calculates the internal rate of return for a schedule of cash flows that is
@@ -231,7 +236,7 @@ to the project. Since there are over 50 functions, I'll break them into "tiers."
 
 - **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
 - **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, ✓effect,
-  ✓nominal, syd, mirr
+  ✓nominal, ✓syd, mirr
 - **Tier 3:** rri, pduration, vdb, fvschedule, dollarde, dollarfr, ispmt
 - **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
   pricedisc, pricemat, yielddisc, yieldmat
