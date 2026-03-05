@@ -73,6 +73,11 @@ const internalRate = irr([-1500, 500, 500, 500, 500]);
 Calculates the the cumulative interest paid on a loan between a start period and
 an end period.
 
+### `cumprinc(rate, nper, pv, startPeriod, endPeriod, type)`
+
+Calculates the cumulative principal paid on a loan between a start period and an
+end period.
+
 ### `fv(rate, nper, pmt, pv, type = 0)`
 
 Calculates the future value of an investment based on a constant interest rate.
@@ -192,7 +197,7 @@ functions](https://support.microsoft.com/en-us/office/financial-functions-refere
 to the project. Since there are over 50 functions, I'll break them into "tiers."
 
 - **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
-- **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, cumprinc, sln, db, ddb, effect, nominal, syd,
+- **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, sln, db, ddb, effect, nominal, syd,
   mirr
 - **Tier 3:** rri, pduration, vdb, fvschedule, dollarde, dollarfr, ispmt
 - **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
