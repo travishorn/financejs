@@ -20,3 +20,11 @@ test.each(
     expect(db(cost, salvage, life, period, month)).toBeCloseTo(expected, 8);
   },
 );
+
+test("db() caps depreciation to avoid dropping below salvage (normal branch)", () => {
+  expect(db(100, 80, 2, 2, 12)).toBeCloseTo(9.400000000000006, 8);
+});
+
+test("db() caps depreciation to avoid dropping below salvage (last-period branch)", () => {
+  expect(db(100, 92, 2, 3, 1)).toBeCloseTo(3.5723416666666594, 8);
+});
