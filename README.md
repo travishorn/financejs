@@ -58,6 +58,7 @@ const internalRate = irr([-1500, 500, 500, 500, 500]);
 | `cost`        | The initial cost of the asset.                                                                                                                                                                                                                                                                                                                                                                                        |
 | `dates`       | A schedule of payment dates that corresponds to the cash flow payments. The first payment date indicates the beginning of the schedule of payments. All other dates must be later than this date, but they may occur in any order.                                                                                                                                                                                    |
 | `endPeriod`   | The last period in the calculation.                                                                                                                                                                                                                                                                                                                                                                                   |
+| `effectRate`  | The effective interest rate.                                                                                                                                                                                                                                                                                                                                                                                          |
 | `factor`      | The rate at which the balance declines.                                                                                                                                                                                                                                                                                                                                                                               |
 | `fv`          | The future value or a cash balance you want to attain after the last payment is made. If `fv` is omitted, it is assumed to be `0` (the future value of a loan, for example, is 0). For example, if you want to save $50,000 to pay for a special project in 18 years, then $50,000 is the future value. You could then make a conservative guess at an interest rate and determine how much you must save each month. |
 | `guess`       | A number that you guess is close to the result. In most cases you do not need to provide `guess` for the calculation to succeeed. If a RangeError is thrown, or if the result is not close to what you expected, try again with a different value for `guess`.                                                                                                                                                        |
@@ -120,6 +121,11 @@ be for an annuity. However, the cash flows must occur at regular intervals, such
 as monthly or annually. The internal rate of return is the interest rate
 received for an investment consisting of payments (negative values) and income
 (positive values) that occur at regular periods.
+
+### `nominal(effectRate, npery)`
+
+Calculates the nominal annual interest rate, given the effective rate and the
+number of compounding periods per year.
 
 ### `nper(rate, pmt, pv, fv = 0, type = 0)`
 
@@ -225,7 +231,7 @@ to the project. Since there are over 50 functions, I'll break them into "tiers."
 
 - **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
 - **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, ✓effect,
-  nominal, syd, mirr
+  ✓nominal, syd, mirr
 - **Tier 3:** rri, pduration, vdb, fvschedule, dollarde, dollarfr, ispmt
 - **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
   pricedisc, pricemat, yielddisc, yieldmat

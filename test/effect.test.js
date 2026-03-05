@@ -22,9 +22,9 @@ test.each(
 );
 
 test("effect() throws TypeError for non-numeric input", () => {
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => effect("foo", 4)).toThrow(TypeError);
-  // @ts-ignore
+  // @ts-expect-error
   expect(() => effect(0.05, "bar")).toThrow(TypeError);
   expect(() => effect(NaN, 4)).toThrow(TypeError);
   expect(() => effect(0.05, NaN)).toThrow(TypeError);
