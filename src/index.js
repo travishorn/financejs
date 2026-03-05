@@ -1,3 +1,6 @@
+export { cumipmt } from "./cumipmt.js";
+export { cumprinc } from "./cumprinc.js";
+export { db } from "./db.js";
 export { fv } from "./fv.js";
 export { ipmt } from "./ipmt.js";
 export { irr } from "./irr.js";
@@ -7,5 +10,6 @@ export { pmt } from "./pmt.js";
 export { ppmt } from "./ppmt.js";
 export { pv } from "./pv.js";
 export { rate } from "./rate.js";
+export { sln } from "./sln.js";
 export { xirr } from "./xirr.js";
 export { xnpv } from "./xnpv.js";
