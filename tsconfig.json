@@ -8,5 +8,5 @@
     "skipLibCheck": true
   },
   "include": ["./**/*.js"],
-  "exclude": ["coverage/"]
+  "exclude": ["coverage/", "docs/"]
 }
