@@ -9,6 +9,7 @@ export { fv } from "./fv.js";
 export { fvschedule } from "./fvschedule.js";
 export { ipmt } from "./ipmt.js";
 export { irr } from "./irr.js";
+export { ispmt } from "./ispmt.js";
 export { mirr } from "./mirr.js";
 export { nominal } from "./nominal.js";
 export { nper } from "./nper.js";
