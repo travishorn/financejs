@@ -109,7 +109,7 @@ to the project. Since there are over 50 functions, I'll break them into "tiers."
 - **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
 - **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, ✓effect,
   ✓nominal, ✓syd, ✓mirr
-- **Tier 3:** ✓rri, ✓pduration, ✓vdb, ✓fvschedule, dollarde, dollarfr, ispmt
+- **Tier 3:** ✓rri, ✓pduration, ✓vdb, ✓fvschedule, ✓dollarde, dollarfr, ispmt
 - **Tier 4:** yield, price, duration, mduration, disc, intrate, received,
   pricedisc, pricemat, yielddisc, yieldmat
 - **Tier 5:** all others
