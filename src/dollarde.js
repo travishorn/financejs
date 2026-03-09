@@ -10,7 +10,7 @@
  *
  * Remarks:
  * - If `fraction` is not an integer, it is truncated.
- * - If `fraction` is less than `0`, this function with throw a RangeError.
+ * - If `fraction` is less than `0`, this function will throw a RangeError.
  * - If `fraction` is greater than or equal to `0` and less than `1`, division
  *   by zero is impossible and this function will throw a RangeError.
  *
