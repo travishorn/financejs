@@ -3,7 +3,6 @@ import { yield_ } from "../src/yield_.js";
 
 test.each(
   /** @type {[Date, Date, number, number, number, 1|2|4, 0|1|2|3|4 | undefined, number][]} */ ([
-    // TODO: Verify these against Excel
     [
       new Date("2008-02-15"),
       new Date("2016-11-15"),
@@ -136,6 +135,7 @@ test.each(
     [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 5],
     [new Date("2030-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 0],
     [new Date("2031-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 1e10, 100, 1, 0],
   ]),
 )(
   "yield_() throws RangeError for invalid inputs",

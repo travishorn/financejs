@@ -166,11 +166,6 @@ export function yield_(
     if (f1 === f0) {
       y0 = Math.max(y0 + step, minYield);
       f0 = priceFromYield(y0) - pr;
-      if (f1 === f0) {
-        throw new RangeError(
-          "Cannot calculate YIELD with the provided values.",
-        );
-      }
     }
 
     let y2 = y1 - ((y1 - y0) * f1) / (f1 - f0);
