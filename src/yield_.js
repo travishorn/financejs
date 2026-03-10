@@ -40,7 +40,7 @@
  * @param {number} pr - The security's price per $100 face value.
  * @param {number} redemption - The security's redemption value per $100 face
  * value.
- * @param {number} frequency - The number of coupon payments per year. For
+ * @param {1|2|4} frequency - The number of coupon payments per year. For
  * annual payments, frequency = `1`; for semiannual, frequency = `2`; for
  * quarterly, frequency = `4`.
  * @param {0|1|2|3|4} [basis=0] - The type of day count basis to use. `0` or
@@ -63,7 +63,7 @@ export function yield_(
   const settlementDate = toUtcDate(settlement);
   const maturityDate = toUtcDate(maturity);
 
-  frequency = Math.trunc(frequency);
+  frequency = /** @type {1|2|4} */ (Math.trunc(frequency));
   const basisNumber = Math.trunc(basis ?? 0);
 
   if (rate < 0) {
@@ -97,13 +97,17 @@ export function yield_(
   );
 
   const a = coupdaybs(previousCouponDate, settlementDate, normalizedBasis);
-  const dsc = coupdaysnc(settlementDate, nextCouponDate, normalizedBasis);
+  let dsc = coupdaysnc(settlementDate, nextCouponDate, normalizedBasis);
   const e = coupdays(
     previousCouponDate,
     nextCouponDate,
     frequency,
     normalizedBasis,
   );
+
+  if (normalizedBasis === 3) {
+    dsc = e - a;
+  }
   const n = couponsRemaining(nextCouponDate, maturityDate, monthsPerCoupon);
   const coupon = (100 * rate) / frequency;
 
@@ -193,12 +197,13 @@ function addMonthsUtc(date, months) {
   const year = date.getUTCFullYear();
   const month = date.getUTCMonth();
   const day = date.getUTCDate();
+  const isEndOfMonth = day === lastDayOfMonthUtc(date);
 
   const monthIndex = month + months;
   const newYear = year + Math.floor(monthIndex / 12);
   const newMonth = ((monthIndex % 12) + 12) % 12;
   const monthEndDay = new Date(Date.UTC(newYear, newMonth + 1, 0)).getUTCDate();
-  const newDay = Math.min(day, monthEndDay);
+  const newDay = isEndOfMonth ? monthEndDay : Math.min(day, monthEndDay);
 
   return new Date(Date.UTC(newYear, newMonth, newDay));
 }
@@ -215,6 +220,12 @@ function getCouponBounds(settlementDate, maturityDate, monthsPerCoupon) {
   while (settlementDate < previousCouponDate) {
     nextCouponDate = previousCouponDate;
     previousCouponDate = addMonthsUtc(nextCouponDate, -monthsPerCoupon);
+  }
+
+  // Excel treats settlement on a coupon date as the start of the next period.
+  if (settlementDate >= nextCouponDate) {
+    previousCouponDate = nextCouponDate;
+    nextCouponDate = addMonthsUtc(nextCouponDate, monthsPerCoupon);
   }
 
   return { previousCouponDate, nextCouponDate };

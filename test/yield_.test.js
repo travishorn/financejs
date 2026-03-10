@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { yield_ } from "../src/yield_.js";
 
 test.each(
-  /** @type {[Date, Date, number, number, number, number, number | undefined, number][]} */ ([
+  /** @type {[Date, Date, number, number, number, 1|2|4, 0|1|2|3|4 | undefined, number][]} */ ([
     // TODO: Verify these against Excel
     [
       new Date("2008-02-15"),
@@ -42,7 +42,7 @@ test.each(
       100,
       4,
       2,
-      0.05612633874793323,
+      0.05596325,
     ],
     [
       new Date("2019-09-01"),
@@ -52,7 +52,7 @@ test.each(
       100,
       2,
       3,
-      0.03608596760753001,
+      0.03608011,
     ],
     [
       new Date("2018-12-15"),
@@ -125,12 +125,18 @@ test.each(
 );
 
 test.each(
-  /** @type {[Date, Date, number, number, number, number, number | undefined, number][]} */ (
-    [
-      // TODO: Throwing cases will go here. e.g.,
-      // [settlement, maturity, rate, pr, redemption, frequency, basis]
-    ]
-  ),
+  /** @type {[Date, Date, number, number, number, 1|2|4, 0|1|2|3|4 | undefined][]} */ ([
+    [new Date("invalid"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 0],
+    [new Date("2020-01-01"), new Date("invalid"), 0.05, 98.5, 100, 1, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), -0.01, 98.5, 100, 1, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 0, 100, 1, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 98.5, 0, 1, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 3, 0],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, -1],
+    [new Date("2020-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 5],
+    [new Date("2030-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 0],
+    [new Date("2031-01-01"), new Date("2030-01-01"), 0.05, 98.5, 100, 1, 0],
+  ]),
 )(
   "yield_() throws RangeError for invalid inputs",
   (settlement, maturity, rate, pr, redemption, frequency, basis) => {

@@ -25,3 +25,4 @@ export { syd } from "./syd.js";
 export { vdb } from "./vdb.js";
 export { xirr } from "./xirr.js";
 export { xnpv } from "./xnpv.js";
+export { yield_ } from "./yield_.js";
