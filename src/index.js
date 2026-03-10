@@ -15,6 +15,7 @@ export { nominal } from "./nominal.js";
 export { nper } from "./nper.js";
 export { npv } from "./npv.js";
 export { pduration } from "./pduration.js";
+export { price } from "./price.js";
 export { pmt } from "./pmt.js";
 export { ppmt } from "./ppmt.js";
 export { pv } from "./pv.js";
