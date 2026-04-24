@@ -1,8 +1,4 @@
-import {
-  coupdays as coupdaysUtil,
-  getCouponBounds,
-  toUtcDate,
-} from "./util.js";
+import { actualDays, getCouponBounds, toUtcDate } from "./util.js";
 
 /**
  * Returns the number of days in the coupon period that contains the settlement
@@ -60,10 +56,13 @@ export function coupdays(settlement, maturity, frequency, basis = 0) {
     monthsPerCoupon,
   );
 
-  return coupdaysUtil(
-    previousCouponDate,
-    nextCouponDate,
-    frequency,
-    normalizedBasis,
-  );
+  if (normalizedBasis === 0 || normalizedBasis === 2 || normalizedBasis === 4) {
+    return 360 / frequency;
+  }
+
+  if (normalizedBasis === 3) {
+    return 365 / frequency;
+  }
+
+  return actualDays(previousCouponDate, nextCouponDate);
 }

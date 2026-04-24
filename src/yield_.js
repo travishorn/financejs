@@ -1,13 +1,13 @@
 import {
   actualDays,
-  coupdaybs,
-  coupdays,
-  coupdaysnc,
   couponsRemaining,
   getCouponBounds,
   normalizeZero,
   toUtcDate,
 } from "./util.js";
+import { coupdaybs } from "./coupdaybs.js";
+import { coupdays } from "./coupdays.js";
+import { coupdaysnc } from "./coupdaysnc.js";
 
 /**
  * Calculates the yield on a security that pays periodic interest. Use to
@@ -107,14 +107,14 @@ export function yield_(
     monthsPerCoupon,
   );
 
-  const a = coupdaybs(previousCouponDate, settlementDate, normalizedBasis);
-  let dsc = coupdaysnc(settlementDate, nextCouponDate, normalizedBasis);
-  let e = coupdays(
-    previousCouponDate,
-    nextCouponDate,
+  const a = coupdaybs(settlementDate, maturityDate, frequency, normalizedBasis);
+  let dsc = coupdaysnc(
+    settlementDate,
+    maturityDate,
     frequency,
     normalizedBasis,
   );
+  let e = coupdays(settlementDate, maturityDate, frequency, normalizedBasis);
 
   if (normalizedBasis === 2) {
     e = actualDays(previousCouponDate, nextCouponDate);

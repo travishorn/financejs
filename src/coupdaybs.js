@@ -1,5 +1,7 @@
 import {
-  coupdaybs as coupdaybsUtil,
+  actualDays,
+  days360Eu,
+  days360Us,
   getCouponBounds,
   toUtcDate,
 } from "./util.js";
@@ -60,5 +62,13 @@ export function coupdaybs(settlement, maturity, frequency, basis = 0) {
     monthsPerCoupon,
   );
 
-  return coupdaybsUtil(previousCouponDate, settlementDate, normalizedBasis);
+  if (normalizedBasis === 0) {
+    return days360Us(previousCouponDate, settlementDate);
+  }
+
+  if (normalizedBasis === 4) {
+    return days360Eu(previousCouponDate, settlementDate);
+  }
+
+  return actualDays(previousCouponDate, settlementDate);
 }

@@ -2,9 +2,6 @@ import { expect, test } from "vitest";
 import {
   actualDays,
   addMonthsUtc,
-  coupdaybs,
-  coupdays,
-  coupdaysnc,
   couponsRemaining,
   days360Eu,
   days360Us,
@@ -84,46 +81,6 @@ test("couponsRemaining() counts coupon dates through maturity", () => {
   expect(
     couponsRemaining(new Date("2025-01-01"), new Date("2026-01-01"), 6),
   ).toBe(3);
-});
-
-test("coupdaysnc() switches on basis", () => {
-  const settlement = new Date("2024-01-15");
-  const nextCoupon = new Date("2024-04-15");
-
-  expect(coupdaysnc(settlement, nextCoupon, 0)).toBe(
-    days360Us(settlement, nextCoupon),
-  );
-  expect(coupdaysnc(settlement, nextCoupon, 4)).toBe(
-    days360Eu(settlement, nextCoupon),
-  );
-  expect(coupdaysnc(settlement, nextCoupon, 1)).toBe(
-    actualDays(settlement, nextCoupon),
-  );
-});
-
-test("coupdaybs() switches on basis", () => {
-  const prevCoupon = new Date("2023-10-15");
-  const settlement = new Date("2024-01-15");
-
-  expect(coupdaybs(prevCoupon, settlement, 0)).toBe(
-    days360Us(prevCoupon, settlement),
-  );
-  expect(coupdaybs(prevCoupon, settlement, 4)).toBe(
-    days360Eu(prevCoupon, settlement),
-  );
-  expect(coupdaybs(prevCoupon, settlement, 2)).toBe(
-    actualDays(prevCoupon, settlement),
-  );
-});
-
-test("coupdays() uses basis-specific period length", () => {
-  const prevCoupon = new Date("2024-01-01");
-  const nextCoupon = new Date("2024-07-01");
-
-  expect(coupdays(prevCoupon, nextCoupon, 2, 0)).toBe(180);
-  expect(coupdays(prevCoupon, nextCoupon, 2, 4)).toBe(180);
-  expect(coupdays(prevCoupon, nextCoupon, 2, 3)).toBe(182.5);
-  expect(coupdays(prevCoupon, nextCoupon, 2, 1)).toBe(182);
 });
 
 test("toUtcDate() normalizes valid Date instances to UTC midnight", () => {
