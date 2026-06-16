@@ -2,7 +2,8 @@ name: Deploy TypeDoc to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -27,7 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: "lts/*"
           cache: "npm"
 
       - name: Install dependencies
@@ -36,14 +37,26 @@ jobs:
       - name: Build docs
         run: npm run docs
 
+      - name: Check if docs were generated
+        id: check-docs
+        run: |
+          if [ -d "./docs" ]; then
+            echo "has_docs=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_docs=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup GitHub Pages
+        if: steps.check-docs.outputs.has_docs == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        if: steps.check-docs.outputs.has_docs == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./docs"
 
       - name: Deploy to GitHub Pages
+        if: steps.check-docs.outputs.has_docs == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
