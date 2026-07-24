@@ -7,6 +7,7 @@ export { db } from "./db.js";
 export { ddb } from "./ddb.js";
 export { dollarde } from "./dollarde.js";
 export { dollarfr } from "./dollarfr.js";
+export { duration } from "./duration.js";
 export { effect } from "./effect.js";
 export { fv } from "./fv.js";
 export { fvschedule } from "./fvschedule.js";
