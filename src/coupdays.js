@@ -32,7 +32,7 @@ export function coupdays(settlement, maturity, frequency, basis = 0) {
   const maturityDate = toUtcDate(maturity);
 
   frequency = /** @type {1|2|4} */ (Math.trunc(frequency));
-  const basisNumber = Math.trunc(basis ?? 0);
+  const basisNumber = Math.trunc(basis);
 
   if (![1, 2, 4].includes(frequency)) {
     throw new RangeError("Invalid frequency.");

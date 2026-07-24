@@ -73,7 +73,7 @@ export function duration(
   const maturityDate = toUtcDate(maturity);
 
   frequency = /** @type {1|2|4} */ (Math.trunc(frequency));
-  const basisNumber = Math.trunc(basis ?? 0);
+  const basisNumber = Math.trunc(basis);
 
   if (coupon < 0 || yld < 0) {
     throw new RangeError(

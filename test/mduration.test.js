@@ -83,6 +83,16 @@ test.each(
       undefined,
       8.05423106,
     ],
+    // Single coupon period (n <= 1) — settlement within 6 months of maturity
+    [
+      new Date("2026-10-01"),
+      new Date("2026-12-31"),
+      0.05,
+      0.06,
+      2,
+      0,
+      0.240021575,
+    ],
   ]),
 )(
   "mduration(%s, %s, %s, %s, %s, %s) should return %s",
@@ -96,5 +106,26 @@ test.each(
       basis,
     );
     expect(result).toBeCloseTo(expected, 2);
+  },
+);
+
+test.each(
+  /** @type {[Date, Date, number, number, 1|2|4, 0|1|2|3|4 | undefined][]} */ ([
+    [new Date("invalid"), new Date("2016-01-01"), 0.08, 0.09, 2, 0],
+    [new Date("2008-01-01"), new Date("invalid"), 0.08, 0.09, 2, 0],
+    [new Date("2008-01-01"), new Date("2016-01-01"), -0.01, 0.09, 2, 0],
+    [new Date("2008-01-01"), new Date("2016-01-01"), 0.08, -0.01, 2, 0],
+    [new Date("2008-01-01"), new Date("2016-01-01"), 0.08, 0.09, 3, 0],
+    [new Date("2008-01-01"), new Date("2016-01-01"), 0.08, 0.09, 2, -1],
+    [new Date("2008-01-01"), new Date("2016-01-01"), 0.08, 0.09, 2, 5],
+    [new Date("2008-01-01"), new Date("2008-01-01"), 0.08, 0.09, 2, 0],
+    [new Date("2016-01-01"), new Date("2008-01-01"), 0.08, 0.09, 2, 0],
+  ]),
+)(
+  "mduration() throws RangeError for invalid inputs",
+  (settlement, maturity, coupon, yld, frequency, basis) => {
+    expect(() =>
+      mduration(settlement, maturity, coupon, yld, frequency, basis),
+    ).toThrow(RangeError);
   },
 );
