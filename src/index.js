@@ -15,6 +15,7 @@ export { ipmt } from "./ipmt.js";
 export { irr } from "./irr.js";
 export { ispmt } from "./ispmt.js";
 export { mirr } from "./mirr.js";
+export { mduration } from "./mduration.js";
 export { nominal } from "./nominal.js";
 export { nper } from "./nper.js";
 export { npv } from "./npv.js";
