@@ -75,7 +75,7 @@ export function yield_(
   const maturityDate = toUtcDate(maturity);
 
   frequency = /** @type {1|2|4} */ (Math.trunc(frequency));
-  const basisNumber = Math.trunc(basis ?? 0);
+  const basisNumber = Math.trunc(basis);
 
   if (rate < 0) {
     throw new RangeError("Invalid rate.");
@@ -164,10 +164,6 @@ export function yield_(
   let f1 = priceFromYield(y1) - pr;
 
   for (let iteration = 0; iteration < maxIterations; iteration += 1) {
-    if (Math.abs(f1) < epsilon) {
-      return normalizeZero(y1);
-    }
-
     if (f1 === f0) {
       y0 = Math.max(y0 + step, minYield);
       f0 = priceFromYield(y0) - pr;
