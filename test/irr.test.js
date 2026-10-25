@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { irr } from "../src/irr.js";
+import { irr } from "../src/excel/irr.js";
 
 /** @type {[number[], number | undefined, number][]} */
 const irrSuccessCases = [

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { pmt } from "../src/pmt.js";
+import { pmt } from "../src/excel/pmt.js";
 
 test.each(
   /** @type {[number, number, number, number | undefined, 0 | 1 | undefined, number][]} */ ([

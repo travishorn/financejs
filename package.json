@@ -10,7 +10,10 @@
     "url": "https://github.com/travishorn/financejs/issues"
   },
   "homepage": "https://github.com/travishorn/financejs#readme",
-  "exports": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./excel": "./src/excel/index.js"
+  },
   "files": [
     "src",
     "README.md",

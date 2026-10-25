@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { rate } from "../src/rate.js";
+import { rate } from "../src/excel/rate.js";
 
 /** @type {[number, number, number, number | undefined, 0 | 1 | undefined, number | undefined, number][]} */
 const rateSuccessCases = [
