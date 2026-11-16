@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { nper } from "../src/nper.js";
+import { nper } from "../src/excel/nper.js";
 
 test.each(
   /** @type {[number, number, number, number | undefined, 0 | 1 | undefined, number][]} */ ([

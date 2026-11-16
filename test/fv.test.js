@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { fv } from "../src/fv.js";
+import { fv } from "../src/excel/fv.js";
 
 test.each(
   /** @type {[number, number, number, number, 0 | 1 | undefined, number][]} */ ([

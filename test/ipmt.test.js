@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { ipmt } from "../src/ipmt.js";
+import { ipmt } from "../src/excel/ipmt.js";
 
 test.each(
   /** @type {[number, number, number, number, number | undefined, 0 | 1 | undefined, number][]} */ ([
