@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { sln } from "../src/sln.js";
+import { sln } from "../src/excel/sln.js";
 
 test.each(
   /** @type {[number, number, number, number][]} */ ([

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { nominal } from "../src/nominal.js";
+import { nominal } from "../src/excel/nominal.js";
 
 test.each(
   /** @type {[number, number, number][]} */ ([

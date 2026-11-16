@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { effect } from "../src/effect.js";
+import { effect } from "../src/excel/effect.js";
 
 test.each(
   /** @type {[number, number, number][]} */ ([
