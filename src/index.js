@@ -1,6 +1,6 @@
 export { calculatePayment } from "./payment.js";
 export { calculateRate } from "./rate.js";
-export { calculateInternalRateOfReturn } from "./irr.js";
+export { calculateInternalRateOfReturn } from "./internal-rate-of-return.js";
 export { calculatePresentValue } from "./present-value.js";
 export { calculateFutureValue } from "./future-value.js";
 export { calculatePeriods } from "./periods.js";

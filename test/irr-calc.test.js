@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { calculateInternalRateOfReturn } from "../src/irr.js";
+import { calculateInternalRateOfReturn } from "../src/internal-rate-of-return.js";
 
 test.each(
   /** @type {[number[], number | undefined, number][]} */ ([

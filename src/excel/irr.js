@@ -1,4 +1,4 @@
-import { calculateInternalRateOfReturn } from "../irr.js";
+import { calculateInternalRateOfReturn } from "../internal-rate-of-return.js";
 
 /**
  * Calculates the internal rate of return for a series of cash flows represented
