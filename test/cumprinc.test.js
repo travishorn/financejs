@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { cumprinc } from "../src/cumprinc.js";
+import { cumprinc } from "../src/excel/cumprinc.js";
 
 test.each(
   /** @type {[number, number, number, number, number, 0 | 1, number][]} */ ([

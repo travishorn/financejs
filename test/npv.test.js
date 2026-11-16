@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { npv } from "../src/npv.js";
+import { npv } from "../src/excel/npv.js";
 
 test.each(
   /** @type {[number, number[], number][]} */ ([

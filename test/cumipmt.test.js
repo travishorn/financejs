@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { cumipmt } from "../src/cumipmt.js";
+import { cumipmt } from "../src/excel/cumipmt.js";
 
 test.each(
   /** @type {[number, number, number, number, number, 0 | 1, number][]} */ ([

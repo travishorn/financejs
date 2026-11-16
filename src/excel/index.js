@@ -6,3 +6,6 @@ export { fv } from "./fv.js";
 export { nper } from "./nper.js";
 export { ipmt } from "./ipmt.js";
 export { ppmt } from "./ppmt.js";
+export { cumipmt } from "./cumipmt.js";
+export { cumprinc } from "./cumprinc.js";
+export { npv } from "./npv.js";
