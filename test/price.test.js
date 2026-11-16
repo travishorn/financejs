@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { price } from "../src/price.js";
+import { price } from "../src/excel/price.js";
 
 test.each(
   /** @type {[Date, Date, number, number, number, 1|2|4, 0|1|2|3|4 | undefined, number][]} */ ([

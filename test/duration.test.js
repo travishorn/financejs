@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { duration } from "../src/duration.js";
+import { duration } from "../src/excel/duration.js";
 
 test.each(
   /** @type {[Date, Date, number, number, 1|2|4, 0|1|2|3|4 | undefined, number][]} */ ([

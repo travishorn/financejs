@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { yield_ } from "../src/yield_.js";
+import { yield_ } from "../src/excel/yield_.js";
 
 test.each(
   /** @type {[Date, Date, number, number, number, 1|2|4, 0|1|2|3|4 | undefined, number][]} */ ([
