@@ -1,0 +1,39 @@
+import { expect, test } from "vitest";
+import { calculateNetPresentValue } from "../src/net-present-value.js";
+
+test.each(
+  /** @type {[number, number[], number][]} */ ([
+    [0.02, [-50000, 91332, 95379, 83519], 205802.267367961],
+    [0.03, [-43006, 60264, 23129, 34643], 66997.3700499066],
+    [0.09, [-54404, 60439, 11971, 95653], 77965.1756613633],
+    [0.1, [-80427, -89098, 47970, 40361], -83142.4882180179],
+    [0.2, [-12552, 41244, -93702, 84914], 4906.01080246914],
+    [0.11, [78850, 12109, 35278, 97086], 170612.496985565],
+    [0.19, [-13182, 26250, 49352, 54732], 64038.9109341756],
+    [0.09, [-41941, 21473, -20029, 61674], 7820.76638912857],
+    [0.18, [-40433, 39029, 31605, -68195], -22173.6777380818],
+    [0.04, [-89316, 66418, 54279, 60256], 75287.3200124295],
+  ]),
+)(
+  "calculateNetPresentValue() matches Excel to 8 decimal places",
+  (rate, cashFlows, expected) => {
+    expect(calculateNetPresentValue({ rate, cashFlows })).toBeCloseTo(
+      expected,
+      8,
+    );
+  },
+);
+
+test.each(
+  /** @type {[number, number[]][]} */ ([
+    [-1, [-89316, 66418, 54279, 60256]],
+    [0.04, []],
+  ]),
+)(
+  "calculateNetPresentValue() throws RangeError for invalid inputs",
+  (rate, cashFlows) => {
+    expect(() => calculateNetPresentValue({ rate, cashFlows })).toThrow(
+      RangeError,
+    );
+  },
+);

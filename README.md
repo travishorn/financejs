@@ -1,16 +1,17 @@
 # financejs
 
-Excel-style time value of money and cash-flow formulas. This is a modern rewrite
-of [tvm-financejs](https://github.com/kgkars/tvm-financejs/) by
+Time value of money and cash-flow functions. This is a modern rewrite of
+[tvm-financejs](https://github.com/kgkars/tvm-financejs/) by
 [kgkars](https://github.com/kgkars).
 
 ## Why this rewrite
 
-This project keeps the formula behavior and conventions from the original
-library, but modernizes the implementation and tooling:
+This project keeps the functionality from the original library, but modernizes
+the implementation and tooling:
 
 - Native ESM
-- Named function exports (no class wrapper)
+- Modern API
+- Named function exports
 - Native error handling
 - Strict type-checking
 - JSDoc documentation
@@ -27,30 +28,56 @@ npm install @travishorn/financejs
 ## Usage
 
 ```js
-import { pmt, rate, irr } from "@travishorn/financejs";
+import {
+  calculatePayment,
+  calculateRate,
+  calculateInternalRateOfReturn,
+} from "@travishorn/financejs";
 
-const payment = pmt(0.0525, 5, -10000);
-// 2325.733168046526
+const payment = calculatePayment({
+  rate: 0.08 / 12,
+  periods: 10,
+  presentValue: 10000,
+});
+// -1037.0320893591638
 
-const periodicRate = rate(60, 500, -25000);
-// 0.006183413161254404
+const periodicRate = calculateRate({
+  periods: 4 * 12,
+  payment: -200,
+  presentValue: 8000,
+});
+// 0.007701472488210084
 
-const internalRate = irr([-1500, 500, 500, 500, 500]);
-// 0.12589832495374934
+const internalRate = calculateInternalRateOfReturn({
+  cashFlows: [-70000, 12000, 15000, 18000, 21000],
+});
+// -0.021244848272975403
 ```
 
 For full API documentation, visit
 [https://travishorn.github.io/financejs/](https://travishorn.github.io/financejs/).
 
-## Excel-style conventions
+## Excel-style functions
 
-- Outputs are not rounded automatically.
-- `pv` is typically negative for loans/investments (same convention as Excel).
-- `type` means payment timing:
-  - `0` = end of period (arrears)
-  - `1` = beginning of period (advance)
-- `rate` must match period frequency (e.g., annual rate divided by 12 for
-  monthly periods).
+If you prefer Excel-style function calling, every function is also available
+with its Excel name and positional arguments. Import them from the
+`@travishorn/financejs/excel` subpath:
+
+```js
+import { pmt, rate, irr } from "@travishorn/financejs/excel";
+
+const payment = pmt(0.08 / 12, 10, 10000);
+// -1037.0320893591638
+
+const periodicRate = rate(4 * 12, -200, 8000);
+// 0.007701472488210084
+
+const internalRate = irr([-70000, 12000, 15000, 18000, 21000]);
+// -0.021244848272975403
+```
+
+These mirror Excel exactly. For example, Excel `=PMT(0.08 / 12, 10, 10000)` is
+`pmt(0.08 / 12, 10, 10000)` here.
 
 ## Error behavior
 
@@ -97,29 +124,22 @@ npm run format
 
 ## Notes on compatibility
 
-This rewrite is intended to match Excel-style formulas closely (tests validate
-to 8 decimal places), while using a modern JavaScript module API.
+This library matches Excel calculations closely (tests validate to 8 decimal
+places), while using a modern JavaScript module API.
 
 ## Roadmap
 
-I want to add more [Excel financial
-functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8)
-to the project. Since there are over 50 functions, broke them into "tiers."
-Tiers 1-3 are complete.
-
-- **Tier 1:** ✓pmt, ✓pv, ✓fv, ✓npv, ✓irr, ✓rate, ✓nper, ✓xnpv, ✓xirr
-- **Tier 2:** ✓ipmt, ✓ppmt, ✓cumipmt, ✓cumprinc, ✓sln, ✓db, ✓ddb, ✓effect,
-  ✓nominal, ✓syd, ✓mirr
-- **Tier 3:** ✓rri, ✓pduration, ✓vdb, ✓fvschedule, ✓dollarde, ✓dollarfr, ✓ispmt
-- **Tier 4:** ✓yield, ✓price, ✓duration, mduration, disc, intrate, received,
-  pricedisc, pricemat, yielddisc, yieldmat
-- **Tier 5:** ✓coupdaybs, ✓coupdays, ✓coupdaysnc, all others
+The most commonly-used Excel financial functions are already implemented.
+However, there are still many more I'd like to add. I'd still like to implement
+`COUPNUM`, `COUPNCD`, `COUPPCD`, `ACCRINT`, `ACCRINTM`, `TBILLPRICE`,
+`TBILLYIELD`, `TBILLEQ`, `PRICEDISC`, `DISC`, `YIELDDISC`, `RECEIVED`,
+`INTRATE`, `PRICEMAT`, `YIELDMAT`, `ODDLPRICE`, `ODDLYIELD`, `ODDFPRICE`,
+`ODDFYIELD`, `AMORLINC`, and `AMORDEGRC`.
 
 ## License
 
 The MIT License
 
-Copyright 2020 kgkars  
 Copyright 2026 Travis Horn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of

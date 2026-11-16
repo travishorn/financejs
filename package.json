@@ -1,6 +1,6 @@
 {
   "name": "@travishorn/financejs",
-  "version": "1.21.1",
+  "version": "2.0.0",
   "description": "Modern JavaScript time value of money and cash-flow financial formulas with Excel-style behavior.",
   "repository": {
     "type": "git",
@@ -10,7 +10,10 @@
     "url": "https://github.com/travishorn/financejs/issues"
   },
   "homepage": "https://github.com/travishorn/financejs#readme",
-  "exports": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./excel": "./src/excel/index.js"
+  },
   "files": [
     "src",
     "README.md",
