@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { ispmt } from "../src/ispmt.js";
+import { ispmt } from "../src/excel/ispmt.js";
 
 test.each(
   /** @type {[number, number, number, number, number][]} */ ([

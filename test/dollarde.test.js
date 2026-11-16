@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { dollarde } from "../src/dollarde.js";
+import { dollarde } from "../src/excel/dollarde.js";
 
 test.each(
   /** @type {[number, number, number][]} */ ([

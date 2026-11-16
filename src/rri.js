@@ -1,18 +1,5 @@
-/**
- * Calculates an equivalent interest rate for the growth of an investment.
- *
- * @param {number} nper - The number of periods for the investment.
- * @param {number} pv - The present value of the investment.
- * @param {number} fv - The future value of the investment.
- * @returns {number} the equivalent interest rate
- * @throws {RangeError} if `nper` is less than or equal to zero
- * @throws {RangeError} if `pv` is zero
- *
- * @example
- * rri(96, 10000, 11000); // 0.00099331
- */
-export function rri(nper, pv, fv) {
-  if (nper <= 0) throw new RangeError("Number of periods must be positive");
-  if (pv === 0) throw new RangeError("Present value cannot be zero");
-  return Math.pow(fv / pv, 1 / nper) - 1;
-}
+// Temporary compatibility shim. The canonical Excel-style `rri` now lives at
+// ./excel/rri.js and delegates to the modern `calculateEquivalentRate` engine.
+// This re-export keeps internal modules working untouched until they are
+// migrated in a later increment.
+export { rri } from "./excel/rri.js";

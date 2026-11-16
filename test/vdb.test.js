@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { vdb } from "../src/vdb.js";
+import { vdb } from "../src/excel/vdb.js";
 
 test.each(
   /** @type {[number, number, number, number, number, number | undefined, boolean | undefined, number][]} */ ([

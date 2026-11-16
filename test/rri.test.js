@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { rri } from "../src/rri.js";
+import { rri } from "../src/excel/rri.js";
 
 test.each(
   /** @type {[number, number, number, number][]} */ ([

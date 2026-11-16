@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { pduration } from "../src/pduration.js";
+import { pduration } from "../src/excel/pduration.js";
 
 test.each(
   /** @type {[number, number, number, number][]} */ ([

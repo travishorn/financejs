@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { fvschedule } from "../src/fvschedule.js";
+import { fvschedule } from "../src/excel/fvschedule.js";
 
 test.each(
   /** @type {[number, number[], number][]} */ ([
