@@ -63,7 +63,7 @@ function internalPv(cashFlows, guess = 0.1) {
  * - Uses an iterative technique for calculating the internal rate of return.
  *   Starting with `guess`, this function cycles through the calculation until
  *   the result is accurate within a small absolute threshold. If this function
- *   can't find a result that works after 39 tries, a RangeError is thrown.
+ *   can't find a result that works after 100 tries, a RangeError is thrown.
  * - This function is closely related to `calculateNetPresentValue()`, the net
  *   present value function. The rate of return calculated by this function is
  *   the interest rate corresponding to a 0 (zero) net present value.
@@ -99,64 +99,91 @@ export function calculateInternalRateOfReturn(options) {
     throw new RangeError("Invalid values.");
   }
 
-  const epsilonMax = 0.0000001;
-  const step = 0.00001;
-  const iterationMax = 39;
+  const epsilonMax = 0.000000000001;
+  const iterationMax = 100;
 
-  let maxAbsoluteValue = Math.abs(cashFlows[0]);
+  let lowerRate = -0.99;
+  let upperRate = guess > lowerRate ? guess : 0.1;
+  let lowerNpv = internalPv(cashFlows, lowerRate);
+  let upperNpv = internalPv(cashFlows, upperRate);
 
-  for (let index = 0; index < cashFlows.length; index += 1) {
-    const absoluteValue = Math.abs(cashFlows[index]);
+  if (lowerNpv === 0) {
+    return lowerRate;
+  }
 
-    if (absoluteValue > maxAbsoluteValue) {
-      maxAbsoluteValue = absoluteValue;
+  if (upperNpv === 0) {
+    return upperRate;
+  }
+
+  for (let expansion = 0; expansion < 20; expansion += 1) {
+    if ((lowerNpv > 0 && upperNpv < 0) || (lowerNpv < 0 && upperNpv > 0)) {
+      break;
+    }
+
+    if (expansion % 2 === 0) {
+      lowerRate = -1 + (1 + lowerRate) / 10;
+      lowerNpv = internalPv(cashFlows, lowerRate);
+
+      if (lowerNpv === 0) {
+        return lowerRate;
+      }
+    } else {
+      upperRate = (upperRate + 1) * 10;
+      upperNpv = internalPv(cashFlows, upperRate);
+
+      if (upperNpv === 0) {
+        return upperRate;
+      }
     }
   }
 
-  const npvEpsilon = maxAbsoluteValue * epsilonMax * 0.01;
-
-  let rate0 = guess;
-  let npv0 = internalPv(cashFlows, rate0);
-  let rate1 = npv0 > 0 ? rate0 + step : rate0 - step;
-
-  if (rate1 <= -1) {
+  if (!((lowerNpv > 0 && upperNpv < 0) || (lowerNpv < 0 && upperNpv > 0))) {
     throw new RangeError("Invalid values.");
   }
 
-  let npv1 = internalPv(cashFlows, rate1);
+  let retainedSide = 0;
 
   for (let iteration = 0; iteration <= iterationMax; iteration += 1) {
-    if (npv1 === npv0) {
-      rate0 = rate1 > rate0 ? rate0 - step : rate0 + step;
-      npv0 = internalPv(cashFlows, rate0);
+    const bracketWidth = upperRate - lowerRate;
 
-      if (npv1 === npv0) {
-        throw new RangeError("Invalid values.");
+    let rate = lowerRate - (lowerNpv * bracketWidth) / (upperNpv - lowerNpv);
+
+    if (!(
+      rate > lowerRate + bracketWidth * 0.05 &&
+      rate < upperRate - bracketWidth * 0.05
+    )) {
+      rate = (lowerRate + upperRate) / 2;
+    }
+
+    const npv = internalPv(cashFlows, rate);
+
+    if (npv === 0) {
+      return rate;
+    }
+
+    if ((npv > 0 && lowerNpv > 0) || (npv < 0 && lowerNpv < 0)) {
+      lowerRate = rate;
+      lowerNpv = npv;
+
+      if (retainedSide === 1) {
+        upperNpv /= 2;
       }
+
+      retainedSide = 1;
+    } else {
+      upperRate = rate;
+      upperNpv = npv;
+
+      if (retainedSide === -1) {
+        lowerNpv /= 2;
+      }
+
+      retainedSide = -1;
     }
 
-    rate0 = rate1 - ((rate1 - rate0) * npv1) / (npv1 - npv0);
-
-    if (rate0 <= -1) {
-      rate0 = (rate1 - 1) * 0.5;
+    if (upperRate - lowerRate < epsilonMax) {
+      return (lowerRate + upperRate) / 2;
     }
-
-    npv0 = internalPv(cashFlows, rate0);
-
-    const rateDelta = Math.abs(rate0 - rate1);
-    const absoluteNpv = Math.abs(npv0);
-
-    if (absoluteNpv < npvEpsilon && rateDelta < epsilonMax) {
-      return rate0;
-    }
-
-    const nextNpv = npv0;
-    npv0 = npv1;
-    npv1 = nextNpv;
-
-    const nextRate = rate0;
-    rate0 = rate1;
-    rate1 = nextRate;
   }
 
   throw new RangeError("Maximum iterations exceeded while calculating IRR.");
