@@ -5,3 +5,4 @@ export { pv } from "./pv.js";
 export { fv } from "./fv.js";
 export { nper } from "./nper.js";
 export { ipmt } from "./ipmt.js";
+export { ppmt } from "./ppmt.js";

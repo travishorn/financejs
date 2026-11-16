@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { ppmt } from "../src/ppmt.js";
+import { ppmt } from "../src/excel/ppmt.js";
 
 test.each(
   /** @type {[number, number, number, number, number | undefined, 0 | 1 | undefined, number][]} */ ([
