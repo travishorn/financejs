@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { mirr } from "../src/mirr.js";
+import { mirr } from "../src/excel/mirr.js";
 
 /** @type {[number[], number, number, number][]} */
 const mirrSuccessCases = [

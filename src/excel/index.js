@@ -11,3 +11,4 @@ export { cumprinc } from "./cumprinc.js";
 export { npv } from "./npv.js";
 export { xnpv } from "./xnpv.js";
 export { xirr } from "./xirr.js";
+export { mirr } from "./mirr.js";
