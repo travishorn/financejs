@@ -31,3 +31,9 @@ test.each(
     expect(excelResult).toBe(modernResult);
   },
 );
+
+test("cumipmt() throws RangeError for invalid type", () => {
+  expect(() =>
+    cumipmt(0.09 / 12, 30 * 12, 125000, 1, 12, /** @type {0 | 1} */ (2)),
+  ).toThrow(RangeError);
+});
