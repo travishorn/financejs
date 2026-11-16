@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { xnpv } from "../src/xnpv.js";
+import { xnpv } from "../src/excel/xnpv.js";
 
 test.each([
   [

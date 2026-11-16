@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
-import { xirr } from "../src/xirr.js";
+import { xirr } from "../src/excel/xirr.js";
 
 import { afterEach, vi } from "vitest";
 
 afterEach(() => {
-  vi.doUnmock("../src/xnpv.js");
+  vi.doUnmock("../src/dated-net-present-value.js");
   vi.resetModules();
   vi.restoreAllMocks();
 });
@@ -189,22 +189,34 @@ test("xirr() handles equal NPV once, then continues secant iteration", async () 
     .mockReturnValueOnce(2)
     .mockReturnValueOnce(0);
 
-  vi.doMock("../src/xnpv.js", () => ({ xnpv: xnpvMock }));
-  const { xirr } = await import("../src/xirr.js");
+  vi.doMock("../src/dated-net-present-value.js", () => ({
+    calculateDatedNetPresentValue: xnpvMock,
+  }));
+  const { calculateDatedInternalRateOfReturn } =
+    await import("../src/dated-internal-rate-of-return.js");
 
   const values = [-100, 200];
   const dates = [new Date("2020-01-01"), new Date("2020-02-01")];
-  const result = xirr(values, dates, 0.1);
+  const result = calculateDatedInternalRateOfReturn({
+    cashFlows: values,
+    dates,
+    guess: 0.1,
+  });
 
   expect(result).toBeCloseTo(0.100030002, 12);
 });
 
 test("xirr() returns a negative rate for a losing investment", async () => {
-  const { xirr } = await import("../src/xirr.js");
+  const { calculateDatedInternalRateOfReturn } =
+    await import("../src/dated-internal-rate-of-return.js");
 
   const values = [-1000, 900];
   const dates = [new Date("2020-01-01"), new Date("2021-01-01")];
-  const result = xirr(values, dates, 0.1);
+  const result = calculateDatedInternalRateOfReturn({
+    cashFlows: values,
+    dates,
+    guess: 0.1,
+  });
 
   expect(result).toBeLessThan(0);
   expect(result).toBeCloseTo(-0.1, 2);
