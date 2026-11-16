@@ -1,7 +1,7 @@
 # financejs
 
-Excel-style time value of money and cash-flow formulas. This is a modern rewrite
-of [tvm-financejs](https://github.com/kgkars/tvm-financejs/) by
+Time value of money and cash-flow functions. This is a modern rewrite of
+[tvm-financejs](https://github.com/kgkars/tvm-financejs/) by
 [kgkars](https://github.com/kgkars).
 
 ## Why this rewrite
@@ -11,7 +11,7 @@ the implementation and tooling:
 
 - Native ESM
 - Modern API
-- Named function exports (no class wrapper)
+- Named function exports
 - Native error handling
 - Strict type-checking
 - JSDoc documentation
@@ -56,6 +56,28 @@ const internalRate = calculateInternalRateOfReturn({
 
 For full API documentation, visit
 [https://travishorn.github.io/financejs/](https://travishorn.github.io/financejs/).
+
+## Excel-style functions
+
+If you prefer Excel-style function calling, every function is also available
+with its Excel name and positional arguments. Import them from the
+`@travishorn/financejs/excel` subpath:
+
+```js
+import { pmt, rate, irr } from "@travishorn/financejs/excel";
+
+const payment = pmt(0.08 / 12, 10, 10000);
+// -1037.0320893591638
+
+const periodicRate = rate(4 * 12, -200, 8000);
+// 0.007701472488210084
+
+const internalRate = irr([-70000, 12000, 15000, 18000, 21000]);
+// -0.021244848272975403
+```
+
+These mirror Excel exactly. For example, Excel `=PMT(0.08 / 12, 10, 10000)` is
+`pmt(0.08 / 12, 10, 10000)` here.
 
 ## Error behavior
 
@@ -104,6 +126,15 @@ npm run format
 
 This library matches Excel calculations closely (tests validate to 8 decimal
 places), while using a modern JavaScript module API.
+
+## Roadmap
+
+The most commonly-used Excel financial functions are already implemented.
+However, there are still many more I'd like to add. I'd still like to implement
+`COUPNUM`, `COUPNCD`, `COUPPCD`, `ACCRINT`, `ACCRINTM`, `TBILLPRICE`,
+`TBILLYIELD`, `TBILLEQ`, `PRICEDISC`, `DISC`, `YIELDDISC`, `RECEIVED`,
+`INTRATE`, `PRICEMAT`, `YIELDMAT`, `ODDLPRICE`, `ODDLYIELD`, `ODDFPRICE`,
+`ODDFYIELD`, `AMORLINC`, and `AMORDEGRC`.
 
 ## License
 
